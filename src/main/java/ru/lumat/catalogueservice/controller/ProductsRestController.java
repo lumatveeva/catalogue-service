@@ -11,7 +11,6 @@ import ru.lumat.catalogueservice.entity.Product;
 import ru.lumat.catalogueservice.payload.NewProductPayload;
 import ru.lumat.catalogueservice.service.ProductService;
 
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -22,7 +21,7 @@ public class ProductsRestController {
     private final ProductService productService;
 
     @GetMapping
-    public List<Product> getAllProducts() {
+    public Iterable<Product> getAllProducts() {
         return productService.findAllProducts();
     }
 
@@ -32,9 +31,9 @@ public class ProductsRestController {
                                            UriComponentsBuilder uriComponentsBuilder)
             throws BindException {
         if (bindingResult.hasErrors()) {
-            if(bindingResult instanceof BindException exception){
+            if (bindingResult instanceof BindException exception) {
                 throw exception;
-            }else{
+            } else {
                 throw new BindException(bindingResult);
             }
         } else {
