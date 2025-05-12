@@ -2,7 +2,7 @@ server:
   port: 8081
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5433/catalogue
+    url: jdbc:postgresql://localhost:5432/catalogue
     driver-class-name: org.postgresql.Driver
     username: postgres
     password: postgres
@@ -13,8 +13,11 @@ spring:
       baseline-on-migrate: true         # Создать baseline для существующей БД
       validate-migration-naming: true   # Проверять именование файлов миграций
       connect-retries: 5                # Количество попыток подключения
+  jpa:
+    show-sql: true
 
 logging:
   level:
     org.flywaydb: DEBUG
+    sql: info
 
