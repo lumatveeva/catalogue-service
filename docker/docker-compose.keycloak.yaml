@@ -1,0 +1,13 @@
+
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:23.0.4
+    container_name: store-keycloak
+    ports:
+      - "8082:8080"
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: ADMIN
+    volumes:
+      - ./config/keycloak/import:/opt/keycloak/data/import
+    command: start-dev --import-realm
