@@ -2,7 +2,9 @@ package ru.lumat.catalogueservice.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +13,7 @@ import ru.lumat.catalogueservice.entity.Product;
 import ru.lumat.catalogueservice.payload.NewProductPayload;
 import ru.lumat.catalogueservice.service.ProductService;
 
+import java.security.Principal;
 import java.util.Map;
 
 @RestController
@@ -21,7 +24,12 @@ public class ProductsRestController {
     private final ProductService productService;
 
     @GetMapping()
-    public Iterable<Product> getAllProducts(@RequestParam(name = "filter", required = false) String filter) {
+    public Iterable<Product> findProducts(@RequestParam(name = "filter", required = false) String filter,
+                                          Principal principal) {
+        LoggerFactory.getLogger(ProductsRestController.class).info("Principal: {}",
+                ((JwtAuthenticationToken) principal)
+                        .getToken()
+                        .getClaimAsString("email"));
         return productService.findAllProducts(filter);
     }
 
